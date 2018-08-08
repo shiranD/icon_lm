@@ -1,22 +1,19 @@
 #!/bin/bash
 set -x
 set -e
+
 # Vars
 emset=TBD # name (or type) of pretrained file (not path sensitive)
 emdim=TBD # dimentions of embeddings
 folds=TBD # how many folds
 corpusname=NAME # corpus name
 
+# Paths
 path2corpus=TBD
 path2trained_embd=TBD
 xmlpath=TBD
 new_embd_dir=embedding
 dataf=data # data folder name
-# Paths
-#xmlpath=TBD # to retrieve icons from
-#new_embd_dir=TBD # embedding foldername
-#path2corpus=TBD # 
-#path2trained_embd=${new_embd_dir}/${emset}_${emdim} # this is the file name location of the embedding
 final_corpus=${dataf}/corpus_CE
 mid_corpus=${dataf}/corpus_ICE
 start_corpus=${dataf}/corpus
@@ -39,9 +36,7 @@ mkdir -p ${mid_corpus}
 
 echo "PRE PROCESS DATA"
 
-# train embeddings from subtlex (optional)
-#pass
-# FIND SENTENCES of the corpus that can be represented purely by EMBEDDINGS
+# optional: prior to this process you may train you own embedding to represent the icons.
 
 # 1) split corpus (-l 1000 should vary given the size of your corpus and node capacity)
 split -l 1000 -d -a 3 ${path2corpus} ${start_corpus}/${corpusname}_ 
