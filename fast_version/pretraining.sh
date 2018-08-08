@@ -64,7 +64,7 @@ THIRD=$(sbatch --dependency=afterany:${SECOND} --array=0-$num ${srcdir}/crp_n_em
 # merge subfiles to one
 # split file N ways
 folds=$(($folds-1))
-FOURTH=$(sbatch --dependency=afterany:${THIRD} $srcdir/split.sh ${final_corpus}/${corpusname} $folds ${dataf}/folds/fold $num $srcdir | cut -f 4 -d' ' )
+FOURTH=$(sbatch --dependency=afterany:${THIRD} $srcdir/split.sh ${final_corpus}/${corpusname} $folds ${dataf}/folds/fold $srcdir | cut -f 4 -d' ' )
 
 # create sets
 FIFTH=$(sbatch --dependency=afterany:${FOURTH} --array=0-$folds $srcdir/sets.sh ${dataf}/folds/fold ${dataf}/sets $folds $srcdir | cut -f 4 -d' ' )
