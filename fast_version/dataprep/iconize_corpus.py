@@ -44,8 +44,8 @@ def iconize_corpus(args):
                 elif embdsyns[word] != "":
                     code = embdsyns[word]
                     sentence.append(code)
-                #else: # comment for pure icon mode
-                    #sentence.append(word) # pure icon mode
+                else: # comment for pure icon mode
+                    sentence.append(word) # pure icon mode
             sentence = str.join(" ", sentence)    
             print(sentence)	
 
