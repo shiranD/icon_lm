@@ -15,8 +15,7 @@ echo "SLURM_ARRAY_JOB_ID: $SLURM_ARRAY_JOB_ID"
 fnames=$1
 numfolds=$2
 foldpath=$3
-arrnum=$4
-srcdir=$5
+srcdir=$4
 
 cat ${fnames}_* > ${fnames}
 numfolds=$(($numfolds+1))
