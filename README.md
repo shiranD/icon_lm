@@ -5,7 +5,7 @@ The code was written by Dudy.
 
 Additional requirements to run the code are:
   * python3
-  * 
+  * [nltk for python](http://www.nltk.org)
 
 Optional, but recommended is to follow the *fast version* of the process (fond in the appropriate folder). There you will be required to have 
  * [slurm scheduler](https://slurm.schedmd.com)
