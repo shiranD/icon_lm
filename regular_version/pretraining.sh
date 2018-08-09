@@ -56,7 +56,7 @@ for i in $(seq 1 ${folds})
 do
   mkdir ${dataf}/sets_${i}
 done
-python3 $srcdir/sets.py --foldspath ${dataf}/folds/fold --path2sets $sets/set_ --numfolds ${folds}
+python3 $srcdir/sets_serial.py --foldspath ${dataf}/folds/fold --path2sets $sets/set_ --numfolds ${folds}
 
 # extract the relevant pretrained embeddings for the corpus (reduce memory) can be done w icon embedding too
 python3 $srcdir/pretrained_embd.py --embdpath ${path2trained_embd} --corpus ${final_corpus}/${corpusname} --fout ${new_embd_dir}/${emset}_${emdim}${kwd}
