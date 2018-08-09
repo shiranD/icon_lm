@@ -15,4 +15,4 @@ Optional, but recommended is to follow the *fast version* of the process (fond i
  
  The *modeling* part trains and tests the icon language models.
  
- ![](images/image.pdf)
+<img src="images/image.png" width="600">
