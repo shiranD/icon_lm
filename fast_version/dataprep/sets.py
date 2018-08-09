@@ -1,11 +1,10 @@
 import argparse
 import random
 
-# shuffle sentneces
-# split to N sets
+# create_sets from N folds
 
 
-def split(args):
+def create_sets(args):
     random.seed(10)
 
     ftrain = open(args.path2sets + "train", "w")
@@ -40,4 +39,4 @@ if __name__ == "__main__":
     parser.add_argument('--foldnum', type=int, help='current fold')
     parser.add_argument('--numfolds', type=int, help='total number of folds')
     args = parser.parse_args()
-    split(args)
+    create_sets(args)
