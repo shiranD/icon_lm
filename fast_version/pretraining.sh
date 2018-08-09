@@ -60,8 +60,6 @@ SECOND=$(sbatch --dependency=afterany:${FIRST} --array=0-$num ${srcdir}/iconize_
 # replace non-icon terms with pretrained terms, and the rest with an <unk> symobol
 THIRD=$(sbatch --dependency=afterany:${SECOND} --array=0-$num ${srcdir}/crp_n_embd.sh ${mid_corpus}/${corpusname} ${path2trained_embd} ${final_corpus}/${corpusname} ${srcdir} | cut -f 4 -d' ' )
 
-# SPLIT DATA
-# merge subfiles to one
 # split file N ways
 folds=$(($folds-1))
 FOURTH=$(sbatch --dependency=afterany:${THIRD} $srcdir/split.sh ${final_corpus}/${corpusname} $folds ${dataf}/folds/fold $srcdir | cut -f 4 -d' ' )
