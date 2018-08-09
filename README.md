@@ -1,4 +1,4 @@
-# icon_lm
+# Icon Languange Modeling Project
 This project generates icon language models from corpus-less icon set. This projects provides the code used for the process and experiments described in [*Compositional Language Modeling for Icon-Based Augmentative and Alternative Communication*](http://www.aclweb.org/anthology/W18-3404) written by Dudy and Bedrick. In the paper you can find more details about the motivation and the context for this research.
 
 The code was written by Dudy.
