@@ -47,9 +47,6 @@ python3 ${srcdir}/crp_n_embd.py --fdata ${mid_corpus}/${corpusname} --fembd ${pa
 awk 'NF' ${final_corpus}/${corpusname}_a > ${final_corpus}/${corpusname}
 rm ${final_corpus}/${corpusname}_a
 
-
-# SPLIT DATA
-# merge subfiles to one
 # split file N ways
 python3 ${srcdir}/split.py --fdata ${final_corpus}/${corpusname} --folds ${folds} --odir ${dataf}/folds/fold
 
@@ -60,7 +57,6 @@ do
   mkdir ${dataf}/sets_${i}
 done
 python3 $srcdir/sets.py --foldspath ${dataf}/folds/fold --path2sets $sets/set_ --numfolds ${folds}
-
 
 # extract the relevant pretrained embeddings for the corpus (reduce memory) can be done w icon embedding too
 python3 $srcdir/pretrained_embd.py --embdpath ${path2trained_embd} --corpus ${final_corpus}/${corpusname} --fout ${new_embd_dir}/${emset}_${emdim}${kwd}
