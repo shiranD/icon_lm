@@ -40,15 +40,11 @@ parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
 parser.add_argument('--fold', type=int, default=1111,
                     help='random seed')
-parser.add_argument('--pred', type=str,
-                    help='path to save the predictions')
-parser.add_argument('--tgt', type=str,
-                    help='path to save the targets')
 parser.add_argument('--cuda', action='store_true',
                     help='use CUDA')
 parser.add_argument('--gpu', type=int, default=[0,1], nargs='+', help='used gpu')
-parser.add_argument('--save', type=str, default='model.pt',
-                    help='path to save the final model')
+parser.add_argument('--load', type=str, default='model.pt',
+                    help='path to load the final model')
 args = parser.parse_args()
 # Set the random seed manually for reproducibility.
 torch.manual_seed(args.seed)
@@ -95,7 +91,7 @@ eval_batch_size = 5
 test_data = batchify(corpus.test, eval_batch_size)
 tst_ln, col = test_data.size()
 
-with open(args.save, 'rb') as f:
+with open(args.load, 'rb') as f:
     model = torch.load(f)
 
 model.set_mode('eval')

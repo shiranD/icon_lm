@@ -37,4 +37,4 @@ fi;
 logname=$9
 srcdir=${10}
 
-python3 ${srcdir}/testing.py --modeltype ${model} --data ${data}/set_${SLURM_ARRAY_TASK_ID}/ --embd ${embdpath} ${aug} --icon ${iconpath} --save ${modelname}_${SLURM_ARRAY_TASK_ID}.pt --emsize ${dim} --cuda --trainlog out/testlog_${logname}_${SLURM_ARRAY_TASK_ID} --gpu $gpu --fold ${SLURM_ARRAY_TASK_ID} 
+python3 ${srcdir}/testing.py --modeltype ${model} --data ${data}/set_${SLURM_ARRAY_TASK_ID}/ --embd ${embdpath} ${aug} --icon ${iconpath} --load ${modelname}_${SLURM_ARRAY_TASK_ID}.pt --emsize ${dim} --cuda --trainlog out/testlog_${logname}_${SLURM_ARRAY_TASK_ID} --gpu $gpu --fold ${SLURM_ARRAY_TASK_ID} 
