@@ -6,7 +6,7 @@ The code was written by Dudy.
 Additional requirements to run the code are:
   * python3
   * [nltk for python](http://www.nltk.org)
-  * An icons' meta data file. Each icon should have its name and synonyms associated with it in the file (here I assume its an XML file). We have used [Symboltix](https://www.n2y.com/symbolstix-prime/) icons metadata file.
+  * An icons' meta data file. Each icon should have its name and synonyms associated with it in the file. Here, I assume the XML file is the icons metadata file of [Symboltix](https://www.n2y.com/symbolstix-prime/).
   * A corpus that contains textual sentences in which the icons (name/synonyms) are found.
   * A pretrained word embedding set. The icon terms (mainly the synonym should be represented in this set).
 
