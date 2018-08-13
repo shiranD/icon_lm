@@ -13,10 +13,12 @@ Additional requirements to run the code are:
 Optional, but recommended is to follow the *fast version* of the process (fond in the appropriate folder). There you will be required to have 
  * [slurm scheduler](https://slurm.schedmd.com)
  * gpus
+  
+ The *dataprep* part of the code generates the simulated icon corpus. This part requires slurm for the *fast\_version*.
  
- The *dataprep* part of the code generates the simulated icon corpus
+ The *modeling* part trains and tests the icon language models. This part requires slurm and gpu for the *fast\_version*
  
- The *modeling* part trains and tests the icon language models.
+ The modeling part can be replaced by any alternative language modeling learning method. I slightly modified the basic approach borrowed from [word langauge modeling](https://github.com/pytorch/examples/tree/master/word_language_model) and adapted it to large vocabularies using [nce](https://github.com/Stonesjtu/Pytorch-NCE).
  
 <p align="center">
 <img src="images/image.png" width="600">
