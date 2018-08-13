@@ -18,4 +18,6 @@ Optional, but recommended is to follow the *fast version* of the process (fond i
  
  The *modeling* part trains and tests the icon language models.
  
+<p align="center">
 <img src="images/image.png" width="600">
+</p>
