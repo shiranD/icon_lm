@@ -4,16 +4,16 @@ set -e
 
 # Vars
 setname=TBD # set name
-emset=glove # pretrain set name
-emdim=TBD
-folds=TBD
+emset=TBD # pretrain set name
+emdim=TBD # vector dimesions
+folds=TBD # number of folds
 logname=${setname}_${emset}${emdim}
 aug=--aug # augment eith icons
 
 # Paths
-embeddingpath=embedding
-testdir=../fast_version/modeling
-modelpath=models
+embeddingpath=embedding # path to embedding folder
+testdir=../fast_version/modeling # path to test folder
+modelpath=models # path to models' folder
 modelname=$modelpath/${setname}_${emset}${emdim}_icon
 sets=${setname}_sets
 kwd=
