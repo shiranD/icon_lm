@@ -22,7 +22,6 @@ sets=${setname}_sets
 kwd=
 
 # Dirs
-mkdir -p ${modelpath}
 mkdir -p error
 mkdir -p out
 
@@ -33,4 +32,4 @@ model2=nce
 
 echo "TEST"
 # Test it w unknown data
-sbatch -p ${node} --gres ${gname} --array=0-${folds} $testdir/testing.sh ${model1} ${sets} ${embeddingpath}/${emset}_${emdim}${kwd} ${aug} ${embeddingpath}/${emset}_${emdim}_icons${kwd} ${modelname} ${emdim} ${gpuunit}  ${logname} ${testdir}
+sbatch -p ${node} --gres ${gname} --array=0-${folds} $testdir/testing.sh ${model1} ${sets} ${embeddingpath}/${emset}_${emdim}${kwd} ${aug} ${embeddingpath}/${emset}_${emdim}_icons${kwd} ${modelname} ${emdim} ${gpuunit} ${logname} ${testdir}
