@@ -35,7 +35,7 @@ parser.add_argument('--bptt', type=int, default=100,
                     help='sequence length')
 parser.add_argument('--dropout', type=float, default=0.2,
                     help='dropout applied to layers (0 = no dropout)')
-parser.add_argument('--trainlog', type=str, help='log filename')
+parser.add_argument('--testlog', type=str, help='log filename')
 parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
 parser.add_argument('--fold', type=int, default=1111,
@@ -49,7 +49,7 @@ args = parser.parse_args()
 # Set the random seed manually for reproducibility.
 torch.manual_seed(args.seed)
 
-logging.basicConfig(filename=args.trainlog,level=logging.INFO)
+logging.basicConfig(filename=args.testlog,level=logging.INFO)
 
 if torch.cuda.is_available():
     logging.info("CUDA is up")
