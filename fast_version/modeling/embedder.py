@@ -44,7 +44,10 @@ def index2embed(sequence, term2vec, int2term, dim):
         term = int2term[int(integer)]
         vec = term2vec[term].numpy()
         new[i, :] = vec
-    new = torch.FloatTensor(new).cuda()
+    try:
+        new = torch.FloatTensor(new).cuda()
+    except:
+        new = torch.FloatTensor(new)
     new = Variable(new)
     new = new.view(row, col, dim)
     return new

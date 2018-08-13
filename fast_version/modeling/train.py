@@ -1,3 +1,4 @@
+from __future__ import division
 import argparse
 import time
 import math
@@ -169,8 +170,10 @@ def get_batch(source, i, evaluation=False):
     seq_len = min(args.bptt, len(source) - 1 - i)
     data = Variable(source[i:i + seq_len], volatile=evaluation)
     target = Variable(source[i + 1:i + 1 + seq_len].view(-1))
-    return data.cuda(), target.cuda()
-
+    if args.cuda:
+        return data.cuda(), target.cuda()
+    else:
+        return data, target
 
 def evaluate(data_source, embedict, data_dict):
     # Turn on evaluation mode which disables dropout.
