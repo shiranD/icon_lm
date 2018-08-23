@@ -67,11 +67,15 @@ def term2sym(data, embd, iconpath=""):
         edict[word] = word
 
     if iconpath:
+        syn_dict = {}
         # override original terms w icon terms
         for h, line in enumerate(open(iconpath, 'r').readlines()):
             line = line.strip()
             line = line.split()
             term = line[0]
             sym = line[1]
-            edict[term] = sym
-    return edict
+            if line[2] == 'main':
+                edict[term] = sym
+            else:
+               syn_dict[term] = sym
+    return edict, syn_dict
