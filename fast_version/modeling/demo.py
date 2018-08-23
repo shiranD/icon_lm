@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('--aug', action='store_true', help='use icons or not')
 parser.add_argument('--data', type=str, help='location of the data corpus')
 parser.add_argument('--icon', type=str, help='path to icon embeddings', default='')
+iparser.add_argument('--iconD', type=str, help='path to icon dict', default='')
 parser.add_argument('--embd', type=str,
                     help='location of the embeddings')
 parser.add_argument('--emsize', type=int, default=200,
@@ -61,7 +62,7 @@ if args.aug:
     assert os.path.exists(os.path.dirname(
         args.icon)), "%r is not a valid path" % args.icon
     embdict = sym2vec(args.data, args.embd, args.icon)
-    embedding_dict = term2sym(args.data, args.embd, args.icon)
+    embedding_dict, syn_dict = term2sym(args.data, args.embd, args.iconD)
 else:
     embdict = sym2vec(args.data, args.embd)
 
@@ -101,12 +102,19 @@ def tokenize(sent):
     assert len(sent) > 0,\
         "the input was empty of tokens"
     for word in sent:
-        assert word in embedding_dict, \
-            "%r contains invalid symbol" % word
+        try:
+            assert word in embedding_dict, \
+                "%r contains invalid symbol" % word
+        except:
+            assert word in syn_dict, \
+                "%r contains invalid symbol" % word
     ids = torch.LongTensor(len(sent))
     syms = []
     for i, word in enumerate(sent):
-        sym = embedding_dict[word]
+        try:
+            sym = embedding_dict[word]
+        except:
+            sym = syn_dict[word]
         ids[i] = corpus.dictionary.word2idx[sym]
         syms.append(sym)
     print(" ".join(syms))
