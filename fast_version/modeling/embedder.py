@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-def sym2vec(data, embd, iconpath=""):
+def sym2vec(embd, iconpath=""):
     """
     load embeddings and if augment=True
     load icon embedding for the same dir
@@ -53,7 +53,7 @@ def index2embed(sequence, term2vec, int2term, dim):
     return new
 
 
-def term2sym(data, embd, iconpath=""):
+def term2sym(embd, iconpath=""):
     """
     load embeddings and if augment=True
     load icon embedding for the same dir
@@ -79,3 +79,27 @@ def term2sym(data, embd, iconpath=""):
             else:
                syn_dict[term] = sym
     return edict, syn_dict
+
+def sym2term(embd, iconpath=""):
+    """
+    load embeddings and if augment=True
+    load icon embedding for the same dir
+    and prioritize them
+    """
+    edict = {}
+    for h, line in enumerate(open(embd, 'r').readlines()):
+        line = line.strip()
+        line = line.split()
+        word = line[0]
+        edict[word] = word
+
+    if iconpath:
+        # override original terms w icon terms
+        for h, line in enumerate(open(iconpath, 'r').readlines()):
+            line = line.strip()
+            line = line.split()
+            term = line[0]
+            sym = line[1]
+            if line[2] == 'main':
+                edict[sym] = term
+    return edict

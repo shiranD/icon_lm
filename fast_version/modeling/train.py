@@ -77,9 +77,9 @@ log_interval = 200
 if args.aug:
     assert os.path.exists(os.path.dirname(
         args.icon)), "%r is not a valid path" % args.icon
-    embdict = sym2vec(args.data, args.embd, args.icon)
+    embdict = sym2vec(args.embd, args.icon)
 else:
-    embdict = sym2vec(args.data, args.embd)
+    embdict = sym2vec(args.embd)
 
 assert args.modeltype in ["basic", "nce", "embd"], "invalid model %r" % args.modeltype
 

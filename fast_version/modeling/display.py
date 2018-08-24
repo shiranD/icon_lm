@@ -1,6 +1,7 @@
 from psychopy import visual, core, event
 import numpy as np
 from demo_reg import tokenize, evaluate
+from embedder import sym2term
 from psychopy import gui
 import argparse
 import os
@@ -48,6 +49,7 @@ parser.add_argument('--load', type=str, default='model.pt',
                     help='path to load the model')
 args = parser.parse_args()
 
+s2term = sym2term(args.embd, args.iconD)
 
 # load icon file list
 with open(args.flist) as f:
@@ -158,16 +160,19 @@ while continueRoutine:
         continueRoutine = False
 
 continueRoutine = True
-for trials in range(3):
-
-    # insert text to a dialogue box
-    myDlg = gui.Dlg(title="Demo number "+str(trials))
-    myDlg.addField('query:')
-    sentence = myDlg.show()[0]  # show dialog and wait for OK or Cancel
-    if myDlg.OK:  # or if ok_data is not None
-        print(sentence)
+rank = -1
+for trials in range(5):
+    if rank==-1:
+        # insert text to a dialogue box
+        myDlg = gui.Dlg(title="Demo number "+str(trials))
+        myDlg.addField('query:')
+        sentence = myDlg.show()[0]  # show dialog and wait for OK or Cancel
+        if myDlg.OK:  # or if ok_data is not None
+            print(sentence)
+        else:
+            print('user cancelled')
     else:
-        print('user cancelled')
+        sentence=sentence+" "+s2term[topk[rank]]
 
     q_data, tokens = tokenize(sentence)
     # make sure is of paths
@@ -189,7 +194,29 @@ for trials in range(3):
 
         if event.getKeys(['return']):
             conitueRoutine = False
+            rank = -1
             break
+        
+        if event.getKeys(['1']):
+            rank = 0
+            conitueRoutine = False
+            break
+
+        if event.getKeys(['2']):
+            rank = 1
+            conitueRoutine = False
+            break
+
+        if event.getKeys(['3']):
+            rank = 2
+            conitueRoutine = False
+            break
+
+        if event.getKeys(['4']):
+            rank = 3
+            conitueRoutine = False
+            break
+
         win.flip()
 win.close()
 

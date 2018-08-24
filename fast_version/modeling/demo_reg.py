@@ -62,10 +62,10 @@ assert type(args.aug) == bool, "%r is not a boolian" % args.aug
 if args.aug:
     assert os.path.exists(os.path.dirname(
         args.icon)), "%r is not a valid path" % args.icon
-    embdict = sym2vec(args.data, args.embd, args.icon)
-    embedding_dict, syn_dict = term2sym(args.data, args.embd, args.iconD)
+    embdict = sym2vec(args.embd, args.icon)
+    embedding_dict, syn_dict = term2sym(args.embd, args.iconD)
 else:
-    embdict = sym2vec(args.data, args.embd)
+    embdict = sym2vec(args.embd)
 
 with open(args.data + 'corpus.pickle', 'rb') as f:
     corpus = pickle.load(f)
