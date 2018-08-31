@@ -58,16 +58,16 @@ if torch.cuda.is_available():
 # check for icon embedding incorporation
 assert type(args.aug) == bool, "%r is not a boolian" % args.aug
 
+with open(args.data + 'corpus.pickle', 'rb') as f:
+    corpus = pickle.load(f)
+
 if args.aug:
     assert os.path.exists(os.path.dirname(
         args.icon)), "%r is not a valid path" % args.icon
     embdict = sym2vec(args.embd, args.icon)
-    embedding_dict, syn_dict = term2sym(args.data, args.embd, args.iconD)
+    embedding_dict, syn_dict = term2sym(args.data, args.embd, args.iconD, corpus.dictionary)
 else:
     embdict = sym2vec(args.embd)
-
-with open(args.data + 'corpus.pickle', 'rb') as f:
-    corpus = pickle.load(f)
 
 # build the specific type of model
 ntokens = len(corpus.dictionary)

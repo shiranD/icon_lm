@@ -53,10 +53,10 @@ def index2embed(sequence, term2vec, int2term, dim):
     return new
 
 
-def term2sym(embd, iconpath=""):
+def term2sym(embd, iconpath="", modeldict=""):
     """
-    load embeddings and if augment=True
-    load icon embedding for the same dir
+    load pre-trained embeddings terms and if augment=True
+    load icon embedding terms for the same dir
     and prioritize them
     """
     edict = {}
@@ -74,16 +74,20 @@ def term2sym(embd, iconpath=""):
             line = line.split()
             term = line[0]
             sym = line[1]
-            if line[2] == 'main':
-                edict[term] = sym
-            else:
-               syn_dict[term] = sym
+            try: # since icon dict is general fit it to vocab
+                modeldict.word2idx[sym]
+                if line[2] == 'main':
+                    edict[term] = sym
+                else:
+                   syn_dict[term] = sym
+            except:
+                   pass
     return edict, syn_dict
 
 def sym2term(embd, iconpath=""):
     """
-    load embeddings and if augment=True
-    load icon embedding for the same dir
+    load embeddings terms and if augment=True
+    load icon embedding terms for the same dir
     and prioritize them
     """
     edict = {}
