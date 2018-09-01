@@ -5,6 +5,8 @@ import numpy as np
 from embedder import sym2vec, index2embed, term2sym
 import os
 import pickle
+from annoy import AnnoyIndex
+import pdb
 
 parser = argparse.ArgumentParser(
     description='PyTorch RNN/LSTM training for Language Models')
@@ -148,6 +150,37 @@ def evaluate(data_source):
         hidden = repackage_hidden(hidden)
 
     return topk
+
+
+###############################################################################
+# Neighbors
+###############################################################################
+
+def make_space():
+    symdict = {}
+    space = None
+    i = 0
+    for key in embdict.keys():
+        if '_N_' in key:
+            vec = embdict[key]
+            if not space:
+                space = AnnoyIndex(len(vec), metric='angular')
+            symdict[key]=i
+            space.add_item(i, vec)
+            i+=1
+    space.build(100)
+    return space, symdict
+        
+def find_neighbors(sym):
+    topk = []
+    idx = symdict[sym[0]]
+    symlist = list(symdict.keys())
+    nearest = space.get_nns_by_item(i=idx, n=10, search_k=-1, include_distances=False)
+    for friend in nearest[:5]:
+        topk.append(symlist[friend])
+    return topk[1:]
+
+space, symdict = make_space()
 
 
 if __name__ == "__main__":

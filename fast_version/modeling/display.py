@@ -1,6 +1,6 @@
 from psychopy import visual, core, event
 import numpy as np
-from demo_reg import tokenize, evaluate
+from demo_reg import tokenize, evaluate, find_neighbors
 from embedder import sym2term
 from psychopy import gui
 import argparse
@@ -60,11 +60,12 @@ content = [x.strip() for x in content]
 
 # Createw window
 win = visual.Window(monitor='testMonitor', units ='norm', screen = 0, color=[0.98, 0.9, 0.6])
-
 # Create images
-instr = visual.TextStim(win, units='norm', height = 0.1, text = 'Press any key to begin', color = [0,0,0])
+instr = visual.TextStim(win, units='norm', alignHoriz='left', height = 0.08, text = 'Press 1 for Semantic Analysis', color = [0,0,0])
+instr1 = visual.TextStim(win, units='norm', alignHoriz='left', height = 0.08, text = 'Press 2 for Langauge Modeling', color = [0,0,0])
 
 def process_tokens(tknlist):
+    # to create path for icon images
     new = []
     for code in tknlist:
         if '_N_' not in code:
@@ -150,74 +151,145 @@ def make_obj(paths, ranks, ficons):
         im_positions[2*len(paths)+i+2*len(ranks)]=(x+i*0.3-0.13, y+0.05)
 
     return items,im_positions
-    
-# Instructions
+ 
 continueRoutine = True
+sm_ana = False
+lm_demo = False
 while continueRoutine:
-    instr.draw()
-    win.flip()
-    if event.getKeys():
-        continueRoutine = False
-
-continueRoutine = True
-rank = -1
-for trials in range(5):
-    if rank==-1:
-        # insert text to a dialogue box
-        myDlg = gui.Dlg(title="Demo number "+str(trials))
-        myDlg.addField('query:')
-        sentence = myDlg.show()[0]  # show dialog and wait for OK or Cancel
-        if myDlg.OK:  # or if ok_data is not None
-            print(sentence)
-        else:
-            print('user cancelled')
-    else:
-        sentence=sentence+" "+s2term[topk[rank]]
-
-    q_data, tokens = tokenize(sentence)
-    # make sure is of paths
-    paths = process_tokens(tokens)
-    topk = evaluate(q_data)
-    ranks = process_tokens(topk)
-    items, im_positions = make_obj(paths, ranks, content)
-    
-    # Create list of position keys for shuffling on every trial
-    imKeys = np.array(list(im_positions.keys()))
-    for j, obj in enumerate(items):
-        obj.pos=(im_positions[imKeys[j]])
-
-    # Set position before each trial
     while continueRoutine:
-        for obj in items:
-            # draw image
-            obj.draw()
-
-        if event.getKeys(['return']):
-            conitueRoutine = False
-            rank = -1
-            break
-        
-        if event.getKeys(['1']):
-            rank = 0
-            conitueRoutine = False
-            break
-
-        if event.getKeys(['2']):
-            rank = 1
-            conitueRoutine = False
-            break
-
-        if event.getKeys(['3']):
-            rank = 2
-            conitueRoutine = False
-            break
-
-        if event.getKeys(['4']):
-            rank = 3
-            conitueRoutine = False
-            break
-
+        instr.pos=(-0.4, 0.2)
+        instr1.pos=(-0.4, -0.2)
+        instr.draw()
+        instr1.draw()
         win.flip()
+        if event.getKeys(['1']):
+            sm_ana=True
+            continueRoutine = False
+        if event.getKeys(['2']):
+            lm_demo=True
+            continueRoutine = False
+        if event.getKeys(['q']):
+            continueRoutine = False
+    
+    if sm_ana:
+        rank = -1
+        for trials in range(5):
+            continueRoutine = True
+            if rank==-1:
+                # insert text to a dialogue box
+                myDlg = gui.Dlg(title="Demo number "+str(trials))
+                myDlg.addField('your word:')
+                word = myDlg.show()[0]  # show dialog and wait for OK or Cancel
+                if myDlg.OK:  # or if ok_data is not None
+                    print(word)
+                else:
+                    print('user cancelled')
+            else:
+                word=s2term[topk[rank]]
+            _, token = tokenize(word)
+            # make sure is of paths
+            paths = process_tokens(token)
+            topk = find_neighbors(token)
+            ranks = process_tokens(topk)
+            items, im_positions = make_obj(paths, ranks, content)
+            
+            # Create list of position keys for shuffling on every trial
+            imKeys = np.array(list(im_positions.keys()))
+            for j, obj in enumerate(items):
+                obj.pos=(im_positions[imKeys[j]])
+        
+            # Set position before each trial
+            while continueRoutine:
+                for obj in items:
+                    # draw image
+                    obj.draw()
+    
+                if event.getKeys(['return']):
+                    rank = -1
+                    break
+                
+                if event.getKeys(['1']):
+                    rank = 0
+                    break
+        
+                if event.getKeys(['2']):
+                    rank = 1
+                    break
+        
+                if event.getKeys(['3']):
+                    rank = 2
+                    break
+        
+                if event.getKeys(['4']):
+                    rank = 3
+                    break
+
+                if event.getKeys(['q']):
+                    sm_ana = False
+                    break
+    
+                win.flip()
+    
+            if not sm_ana:
+                break
+
+    if lm_demo:
+        rank = -1
+        for trials in range(5):
+            continueRoutine = True
+            if rank==-1:
+                # insert text to a dialogue box
+                myDlg = gui.Dlg(title="Demo number "+str(trials))
+                myDlg.addField('query:')
+                sentence = myDlg.show()[0]  # show dialog and wait for OK or Cancel
+                if myDlg.OK:  # or if ok_data is not None
+                    print(sentence)
+                else:
+                    print('user cancelled')
+            else:
+                sentence=sentence+" "+s2term[topk[rank]]
+            q_data, tokens = tokenize(sentence)
+            # make sure is of paths
+            paths = process_tokens(tokens)
+            topk = evaluate(q_data)
+            ranks = process_tokens(topk)
+            items, im_positions = make_obj(paths, ranks, content)
+            
+            # Create list of position keys for shuffling on every trial
+            imKeys = np.array(list(im_positions.keys()))
+            for j, obj in enumerate(items):
+                obj.pos=(im_positions[imKeys[j]])
+        
+            # Set position before each trial
+            while continueRoutine:
+                for obj in items:
+                    # draw image
+                    obj.draw()
+    
+                if event.getKeys(['return']):
+                    rank = -1
+                    break
+                
+                if event.getKeys(['1']):
+                    rank = 0
+                    break
+        
+                if event.getKeys(['2']):
+                    rank = 1
+                    break
+        
+                if event.getKeys(['3']):
+                    rank = 2
+                    break
+        
+                if event.getKeys(['q']):
+                    lm_demo = False
+                    break
+    
+                win.flip()
+    
+            if not lm_demo:
+                break
 win.close()
 
 core.quit()
