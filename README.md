@@ -1,7 +1,22 @@
 # Icon Languange Modeling Project
 This project generates icon language models from corpus-less icon set. This projects provides the code used for the process and experiments described in [*Compositional Language Modeling for Icon-Based Augmentative and Alternative Communication*](http://www.aclweb.org/anthology/W18-3404) written by Dudy and Bedrick. In the paper you can find more details about the motivation and the context for this research.
 
-The code was written by Dudy.
+```@inproceedings{dudy-bedrick-2018-compositional,
+    title = "Compositional Language Modeling for Icon-Based Augmentative and Alternative Communication",
+    author = "Dudy, Shiran  and
+      Bedrick, Steven",
+    booktitle = "Proceedings of the Workshop on Deep Learning Approaches for Low-Resource {NLP}",
+    month = jul,
+    year = "2018",
+    address = "Melbourne",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W18-3404",
+    doi = "10.18653/v1/W18-3404",
+    pages = "25--32"
+}
+```
+
+The code was written by Shiran Dudy.
 
 Additional requirements to run the code are:
   * python3
